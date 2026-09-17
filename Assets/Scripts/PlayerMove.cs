@@ -1,12 +1,10 @@
 using UnityEngine;
-
 public class PlayerMove : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpForce = 7f;
     public float fallDeathY = -8f;         //低于这个y值就掉落死亡
     public Vector3 respawnPoint;           //重生的位置
-
     bool isGrounded;
     private Rigidbody2D rb;
 
@@ -21,7 +19,6 @@ public class PlayerMove : MonoBehaviour
         //读取键盘输入：左右移动（输入必须放在Update）
         float h = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(h * moveSpeed, rb.velocity.y);
-
         //空格跳跃
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
@@ -38,7 +35,7 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    //物理引擎回调：发生碰撞瞬间调用一次，用于地面、地刺碰撞
+    //物理引擎回调：实体碰撞，只用来判断地面
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //碰到地面
@@ -46,19 +43,24 @@ public class PlayerMove : MonoBehaviour
         {
             isGrounded = true;
         }
-        //撞到地刺立刻重生
-        if (collision.collider.CompareTag("Spike"))
-        {
-            Respawn();
-        }
+        //【删掉了这里原来的Spike判断！地刺现在是触发器，不走这个！】
     }
 
+    //离开地面
     private void OnCollisionExit2D(Collision2D collision)
     {
-        //离开地面
         if (collision.collider.CompareTag("Ground"))
         {
             isGrounded = false;
+        }
+    }
+
+    //碰到地刺触发器执行死亡重生（地刺勾选IsTrigger，就由这个函数接收）
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Spike"))
+        {
+            Respawn();
         }
     }
 
