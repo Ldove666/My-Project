@@ -1,0 +1,34 @@
+# Unity缓存文件夹
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# 构建出来的游戏产物，不要提交
+/[Bb]uild/
+/[Bb]uilds/
+
+# Codely在线编辑器产生的文件
+.codely-cli/
+.codely.packages/
+*.codelyignore
+CODELY.md
+
+# VisualStudio / Rider IDE 文件
+.idea/
+*.suo
+*.user
+*.sln
+*.csproj
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# OS系统生成垃圾
+.DS_Store
+Thumbs.db
